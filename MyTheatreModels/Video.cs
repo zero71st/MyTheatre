@@ -1,4 +1,4 @@
-namespace MyTheatreApi.Models
+namespace MyTheatreModels
 {
     public class Video
     {

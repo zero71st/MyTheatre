@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace MyTheatreApi.Models
+namespace MyTheatreModels
 {
     public class Genre
     {

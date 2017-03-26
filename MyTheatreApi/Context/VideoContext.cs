@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-
-namespace MyTheatreApi.Models
+using MyTheatreModels;
+namespace MyTheatreApi.Context
 {
     public class VideoContext
     {
