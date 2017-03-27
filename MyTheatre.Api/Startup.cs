@@ -29,6 +29,19 @@ namespace MyTheatreApi
         {
             // Add framework services.
             services.AddMvc();
+
+            services.AddSwaggerGen();
+            services.ConfigureSwaggerGen(options =>
+            {
+                options.DescribeAllEnumsAsStrings();
+                options.SingleApiVersion(new Swashbuckle.Swagger.Model.Info()
+                {
+                    Title = "My Theatre HTTP API",
+                    Version = "v1",
+                    Description = "My Theatre Service HTTP API",
+                    TermsOfService = "Terms Of Service"
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +51,8 @@ namespace MyTheatreApi
             loggerFactory.AddDebug();
 
             app.UseMvc();
+
+            app.UseSwagger().UseSwaggerUi();
         }
     }
 }
