@@ -1,4 +1,4 @@
-MyTheatreApi/bin/
-MyTheatreApi/obj/
-MyTheatreModels/bin/
-MyTheatreModels/obj/
+MyTheatre.Api/bin/
+MyTheatre.Api/obj/
+MyTheatre.Domain/bin/
+MyTheatre.Domain/obj/
