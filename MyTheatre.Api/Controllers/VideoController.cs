@@ -9,65 +9,78 @@ using MyTheatre.Api.Infrastructure;
 namespace MyTheatre.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class VideoController : Controller
+    public class videosController : Controller
     {
         private MyTheatreContext  _db;
-        public VideoController(MyTheatreContext db)
+        public videosController(MyTheatreContext db)
         {
             _db = db;
         }
         // GET api/Video
         [HttpGet]
-        public dynamic Get()
+        public IEnumerable<Video> Videos()
         {
-            return _db.Videos.Select(t=> new {Id = t.Id,Title = t.Title,Plot = t.Plot});
+            return _db.Videos;
         }
 
         // GET api/Video/5
         [HttpGet("{id:int}")]
-        public Video Get(int id)
+        public async Task<IActionResult> GetVideo(int id)
         {
-            return _db.Videos.FirstOrDefault(t=> t.Id == id);
+            var video = await _db.Videos.FindAsync(id);
+            if (video == null)
+                return NotFound();
+                
+            return Ok(video);
         }
 
         // POST api/Video]
+        [Route("create")]
         [HttpPost]
-        public void Post([FromBody]Video video)
+        public async Task<IActionResult> Create([FromBody]Video video)
         {
-            if (video != null)
-            {
-                _db.Videos.Add(video);
-                _db.SaveChanges();
-            }
+                _db.Videos.Add(
+                    new Video 
+                    {
+                        Title = video.Title,
+                        Plot = video.Plot
+                    });
+               await _db.SaveChangesAsync();
+               return Ok();
         }
 
         // PUT api/video/5
-        [HttpPut("{id:int}")]
-        public void Put(int id, [FromBody]Video video)
+        [Route("update")]
+        [HttpPost]
+        public async Task<IActionResult> UpdateVideo([FromBody]Video video)
         {
-            var v = _db.Videos.Find(id);
+            var videoToUpdate =  await _db.Videos.FindAsync(video.Id);
+            if (videoToUpdate == null)
+                return NotFound();
 
-            if (v != null)
-            {
-                v.Title = video.Title;
-                v.Plot = video.Plot;
-                _db.Videos.Add(v);
-                _db.SaveChanges();
-            }
+            videoToUpdate.Title = video.Title;
+            videoToUpdate.Plot = video.Plot;
+
+            _db.Videos.Update(videoToUpdate);
+
+            await _db.SaveChangesAsync();
+
+            return Ok();
         }
 
         // DELETE api/video/5
         [HttpDelete("{id:int}")]
-        public void Delete(int id)
+        public async Task<IActionResult> DeleteVideo(int id)
         {
-            var v = _db.Videos.Find(id);
+            var videoToDelete = await _db.Videos.FindAsync(id);
 
-            if (v != null)
-            {
-                _db.Videos.Remove(v);
-                _db.SaveChanges();
-            }
-            
+            if (videoToDelete == null)
+                return NotFound();
+
+             _db.Videos.Remove(videoToDelete);
+             await _db.SaveChangesAsync();
+
+             return Ok();
         }
     }
 }
