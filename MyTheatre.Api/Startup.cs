@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using MyTheatre.Api.Infrastructure;
 
-namespace MyTheatreApi
+namespace MyTheatre.Api
 {
     public class Startup
     {
@@ -29,6 +31,8 @@ namespace MyTheatreApi
         {
             // Add framework services.
             services.AddMvc();
+
+            services.AddDbContext<MyTheatreContext>(options => options.UseSqlite("Data Source=MyTheatre.db"));
 
             services.AddSwaggerGen();
             services.ConfigureSwaggerGen(options =>

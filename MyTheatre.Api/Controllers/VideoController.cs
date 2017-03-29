@@ -4,37 +4,39 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MyTheatre.Domain;
-using MyTheatreApi.Context;
+using MyTheatre.Api.Infrastructure;
 
-namespace MyTheatreApi.Controllers
+namespace MyTheatre.Api.Controllers
 {
     [Route("api/[controller]")]
     public class VideoController : Controller
     {
-        private VideoContext  _db;
-        public VideoController()
+        private MyTheatreContext  _db;
+        public VideoController(MyTheatreContext db)
         {
-            _db = new VideoContext();
+            _db = db;
         }
         // GET api/Video
         [HttpGet]
         public IEnumerable<Video> Get()
         {
-            return _db.Videos;
+            // return _db.Videos;
+            return null;
         }
 
         // GET api/Video/5
         [HttpGet("{id:int}")]
         public Video Get(int id)
         {
-            return _db.Videos.FirstOrDefault(v=> v.Id == id);
+            // return _db.Videos.FirstOrDefault(v=> v.Id == id);
+            return null;
         }
 
         // POST api/Video
         [HttpPost]
         public void Post([FromBody]Video video)
         {
-             _db.Videos.Add(video);
+            //  _db.Videos.Add(video);
         }
 
         // PUT api/Video/5
