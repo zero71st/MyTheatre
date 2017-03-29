@@ -18,39 +18,56 @@ namespace MyTheatre.Api.Controllers
         }
         // GET api/Video
         [HttpGet]
-        public IEnumerable<Video> Get()
+        public dynamic Get()
         {
-            // return _db.Videos;
-            return null;
+            return _db.Videos.Select(t=> new {Id = t.Id,Title = t.Title,Plot = t.Plot});
         }
 
         // GET api/Video/5
         [HttpGet("{id:int}")]
         public Video Get(int id)
         {
-            // return _db.Videos.FirstOrDefault(v=> v.Id == id);
-            return null;
+            return _db.Videos.FirstOrDefault(t=> t.Id == id);
         }
 
-        // POST api/Video
+        // POST api/Video]
         [HttpPost]
         public void Post([FromBody]Video video)
         {
-            //  _db.Videos.Add(video);
+            if (video != null)
+            {
+                _db.Videos.Add(video);
+                _db.SaveChanges();
+            }
         }
 
-        // PUT api/Video/5
+        // PUT api/video/5
         [HttpPut("{id:int}")]
         public void Put(int id, [FromBody]Video video)
         {
-            
+            var v = _db.Videos.Find(id);
+
+            if (v != null)
+            {
+                v.Title = video.Title;
+                v.Plot = video.Plot;
+                _db.Videos.Add(v);
+                _db.SaveChanges();
+            }
         }
 
         // DELETE api/video/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public void Delete(int id)
         {
+            var v = _db.Videos.Find(id);
 
+            if (v != null)
+            {
+                _db.Videos.Remove(v);
+                _db.SaveChanges();
+            }
+            
         }
     }
 }
