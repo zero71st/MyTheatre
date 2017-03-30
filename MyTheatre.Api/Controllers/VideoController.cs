@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MyTheatre.Domain;
 using MyTheatre.Api.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyTheatre.Api.Controllers
 {
@@ -18,9 +19,10 @@ namespace MyTheatre.Api.Controllers
         }
         // GET api/Video
         [HttpGet]
-        public IEnumerable<Video> Videos()
+        public async Task<List<Video>> GetVideosAsync()
         {
-            return _db.Videos;
+            var allVideos = await _db.Videos.ToListAsync();
+            return  allVideos;
         }
 
         // GET api/Video/5
