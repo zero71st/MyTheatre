@@ -2,5 +2,14 @@
     ViewData["Title"] = "Manage Movies";
 }
 
-
+<div>
+   
+   @foreach (var item in Model)
+   {
+      <div>@item.Title</div>
+      <div>@item.Plot</div>
+   }
 </div>
+
+
+
