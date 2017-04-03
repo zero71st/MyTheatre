@@ -6,9 +6,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}\\MyTheatre.Api\\bin\\Debug\\netcoreapp1.1\\MyTheatre.Api.dll",
+            "program": "${workspaceRoot}\\MyTheatre.Web\\bin\\Debug\\netcoreapp1.1\\MyTheatre.Web.dll",
             "args": [],
-            "cwd": "${workspaceRoot}\\MyTheatre.Api",
+            "cwd": "${workspaceRoot}\\MyTheatre.Web",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "launchBrowser": {

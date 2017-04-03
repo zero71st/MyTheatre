@@ -4,9 +4,9 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTheatre.Domain", "MyTheatre.Domain\MyTheatre.Domain.csproj", "{DF19A40C-BE02-4840-AA6E-A9D7AD47FF23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTheatre.Api", "MyTheatre.Api\MyTheatre.Api.csproj", "{6A622639-65F4-4C78-9A7A-91A50D708B60}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTheatre.Web", "MyTheatre.Web\MyTheatre.Web.csproj", "{39D264F4-2176-4BFF-B6FE-26752154DB73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTheatre.Api", "MyTheatre.Api\MyTheatre.Api.csproj", "{6A622639-65F4-4C78-9A7A-91A50D708B60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

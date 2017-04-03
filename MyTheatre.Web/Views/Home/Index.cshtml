@@ -1,14 +1,30 @@
-﻿@{
+﻿@model IEnumerable<MyTheatre.Web.ViewModels.VideoViewModel>
+@{
     ViewData["Title"] = "Manage Movies";
 }
 
-<div>
-   
-   @foreach (var item in Model)
-   {
-      <div>@item.Title</div>
-      <div>@item.Plot</div>
-   }
+<div class="col-md-12">
+   <h2>Manage Movies</h2>
+   <p>
+       <a class="btn btn-primary" asp-action="CreateVideo">Create Video</a>
+   </p>
+   <table class="table">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Plot</th>
+        <th>Image</th>
+    </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>@item.Title</td>
+        <td>@item.Plot</td>
+        <td>@item.ImagePath</td>
+    </tr>
+    }
+     </table>
 </div>
 
 

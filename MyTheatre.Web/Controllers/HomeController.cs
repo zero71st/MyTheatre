@@ -5,22 +5,27 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using Newtonsoft.Json;
-using MyTheatre.Domain;
+using MyTheatre.Web.ViewModels;
 
 namespace MyTheatre.Web.Controllers
 {
     public class HomeController : Controller
     {
         private HttpClient _apiClient;
-        private readonly string _remoteServiceBaseUrl = "http://localhost:5000/api/videos";
+        private readonly string _remoteServiceBaseUrl = "http://192.168.99.100:5000/api/videos";
         public async Task<IActionResult> Index()
         {
             _apiClient = new HttpClient();
             var dataString =  await _apiClient.GetStringAsync(_remoteServiceBaseUrl);
 
-              var videos = JsonConvert.DeserializeObject<List<Video>>(dataString);
+              var vms = JsonConvert.DeserializeObject<List<VideoViewModel>>(dataString);
 
-            return View(videos);
+            return View(vms);
+        }
+
+         [HttpGet]
+         public IActionResult CreateVideo(){
+            return View();
         }
 
         public IActionResult About()

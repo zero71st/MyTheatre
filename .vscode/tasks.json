@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}\\MyTheatre.Api\\MyTheatre.Api.csproj"
+                "${workspaceRoot}\\MyTheatre.Web\\MyTheatre.Web.csproj"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"
