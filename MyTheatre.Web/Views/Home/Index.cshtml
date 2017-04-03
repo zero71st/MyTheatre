@@ -1,31 +1,40 @@
 ﻿@model IEnumerable<MyTheatre.Web.ViewModels.VideoViewModel>
 @{
-    ViewData["Title"] = "Manage Movies";
+    ViewData["Title"] = "Manage Videos";
 }
 
-<div class="col-md-12">
-   <h2>Manage Movies</h2>
-   <p>
-       <a class="btn btn-primary" asp-action="CreateVideo">Create Video</a>
-   </p>
+<h2>Manage Videos</h2>
+
+
+        <a class="btn btn-primary" asp-action="CreateVideo">Add Video</a>
+
+  
    <table class="table">
     <thead>
     <tr>
-        <th>Title</th>
-        <th>Plot</th>
-        <th>Image</th>
+        <th>@Html.DisplayNameFor(model => model.Title)</th>
+        <th>@Html.DisplayNameFor(model => model.Plot)</th>
+        <th>@Html.DisplayNameFor(model => model.ImagePath)</th>
     </tr>
     </thead>
+     <tbody>
     @foreach (var item in Model)
     {
+       
     <tr>
-        <td>@item.Title</td>
-        <td>@item.Plot</td>
-        <td>@item.ImagePath</td>
+        <td>
+            <a asp-action="ViewVideo" asp-route-id="@item.Id">@item.Title</a>
+        </td>
+        <td>@Html.DisplayFor(model => model.Title)</td>
+        <td>@Html.DisplayFor(model => model.Plot)</td>
+        <td>
+            <a asp-action="EditVideo" asp-route-id="@item.Id">Edit</a>
+            <a asp-action="DeleteVideo" asp-route-id="@item.Id">Delete</a>
+        </td>
     </tr>
     }
+     </tbody>
      </table>
-</div>
 
 
 

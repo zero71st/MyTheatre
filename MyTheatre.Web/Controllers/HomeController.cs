@@ -15,12 +15,13 @@ namespace MyTheatre.Web.Controllers
         private readonly string _remoteServiceBaseUrl = "http://192.168.99.100:5000/api/videos";
         public async Task<IActionResult> Index()
         {
-            _apiClient = new HttpClient();
-            var dataString =  await _apiClient.GetStringAsync(_remoteServiceBaseUrl);
+            // _apiClient = new HttpClient();
+            // var dataString =  await _apiClient.GetStringAsync(_remoteServiceBaseUrl);
 
-              var vms = JsonConvert.DeserializeObject<List<VideoViewModel>>(dataString);
+            //   var vms = JsonConvert.DeserializeObject<List<VideoViewModel>>(dataString);
 
-            return View(vms);
+            // return View(vms);
+            return View(new List<VideoViewModel>());
         }
 
          [HttpGet]
