@@ -1,0 +1,9 @@
+@model MyTheatre.Web.ViewModels.VideoViewModel
+
+<h1>Delete Video @Model.Title</h1>
+
+<form asp-action="DeleteVideo">
+    <p>Are you sure?</p>
+    <input type="submit" class="btn btn-danger" value="Delete"/>
+    <a asp-action="Index" class="btn btn-default">Cancel</a>
+</form>

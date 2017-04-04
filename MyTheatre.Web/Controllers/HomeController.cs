@@ -16,6 +16,7 @@ namespace MyTheatre.Web.Controllers
         public async Task<IActionResult> Index()
         {
             _apiClient = new HttpClient();
+
             var dataString = await _apiClient.GetStringAsync(_remoteServiceBaseUrl);
 
             var vms = JsonConvert.DeserializeObject<List<VideoViewModel>>(dataString);
@@ -27,6 +28,21 @@ namespace MyTheatre.Web.Controllers
         public IActionResult CreateVideo()
         {
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ViewVideo(int id)
+        {
+            _apiClient = new HttpClient();
+
+            var getVideoUrl = $"{_remoteServiceBaseUrl}/{id}";
+
+            var dataString = await _apiClient.GetStringAsync(getVideoUrl);
+
+            var vm = JsonConvert.DeserializeObject<VideoViewModel>(dataString);
+
+            return View(vm);
+
         }
 
         public async Task<IActionResult> CreateVideo([Bind("Title,Plot")]VideoViewModel video)
@@ -49,8 +65,13 @@ namespace MyTheatre.Web.Controllers
                 return NotFound();
             
             _apiClient = new HttpClient();
-            var dataString = await _apiClient.GetStringAsync(_remoteServiceBaseUrl+"/"+id); 
+
+            var getVideoUrl = $"{_remoteServiceBaseUrl}/{id}";
+
+            var dataString = await _apiClient.GetStringAsync(getVideoUrl); 
+
             var vm = JsonConvert.DeserializeObject<VideoViewModel>(dataString);
+
             if (vm == null)
                 return NotFound();
 
@@ -74,6 +95,38 @@ namespace MyTheatre.Web.Controllers
             }
 
             return View(video);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteVideo(int? id)
+        {
+            if (id == null)
+                return NotFound();
+            
+            _apiClient = new HttpClient();
+
+            var getVideoUrl = $"{_remoteServiceBaseUrl}/{id}";
+            
+            var dataString = await _apiClient.GetStringAsync(getVideoUrl);
+
+            var vm = JsonConvert.DeserializeObject<VideoViewModel>(dataString);
+
+            if (vm == null)
+                return NotFound();
+            
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteVideo(int id)
+        {
+            _apiClient = new HttpClient();
+
+            var deleteUrl = $"{_remoteServiceBaseUrl}/{id}";
+
+            var response = await _apiClient.DeleteAsync(deleteUrl);
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult About()
