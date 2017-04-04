@@ -12,7 +12,7 @@ namespace MyTheatre.Web.Controllers
     public class HomeController : Controller
     {
         private HttpClient _apiClient;
-        private readonly string _remoteServiceBaseUrl = "http://192.168.99.100:5000/api/videos";
+        private readonly string _remoteServiceBaseUrl = "http://localhost:5000/api/videos";
         public async Task<IActionResult> Index()
         {
             _apiClient = new HttpClient();
@@ -23,9 +23,23 @@ namespace MyTheatre.Web.Controllers
             return View(vms);
         }
 
+        [HttpGet]
         public IActionResult CreateVideo()
         {
             return View();
+        }
+
+        public async Task<IActionResult> CreateVideo([Bind("Title,Plot")]VideoViewModel video)
+        {
+            _apiClient = new HttpClient();
+            
+            var createUrl = $"{_remoteServiceBaseUrl}/create";
+            
+            var contentString = new StringContent(JsonConvert.SerializeObject(video),System.Text.Encoding.UTF8,"application/json");
+
+            var response =  await _apiClient.PostAsync(createUrl,contentString);
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]

@@ -4,12 +4,13 @@
 }
 
 <h2>Add Video</h2>
-    <div class="col-sm-offset-10">
-        <a class="btn btn-primary" asp-action="Index">Save</a>
-        <a class="btn btn-warning" asp-action="Index">Cancel</a>
-    </div>
 
 <form asp-action="CreateVideo">
+    <hr/>
+    <div class="col-md-offset-10">
+        <input type="submit" class="btn btn-primary" value="Save"/>
+        <input type="reset" class="btn btn-default" value="Cancel">
+    </div>
     <div class="form-horizontal">
         <div class="form-group">
             <label asp-for="Title" class="col-md-2 control-label"></label>
