@@ -5,11 +5,11 @@
 
 <h2>Manage Videos</h2>
 
+<div class="col-md-offset-11">
+    <a class="btn btn-primary" asp-action="CreateVideo">Add Video</a>
+</div>
 
-        <a class="btn btn-primary" asp-action="CreateVideo">Add Video</a>
-
-  
-   <table class="table">
+<table class="table">
     <thead>
     <tr>
         <th>@Html.DisplayNameFor(model => model.Title)</th>
@@ -19,14 +19,13 @@
     </thead>
      <tbody>
     @foreach (var item in Model)
-    {
-       
+    {   
     <tr>
         <td>
             <a asp-action="ViewVideo" asp-route-id="@item.Id">@item.Title</a>
         </td>
-        <td>@Html.DisplayFor(model => model.Title)</td>
-        <td>@Html.DisplayFor(model => model.Plot)</td>
+        <td>@Html.DisplayFor(modelItem => item.Title)</td>
+        <td>@Html.DisplayFor(modelItem => item.Plot)</td>
         <td>
             <a asp-action="EditVideo" asp-route-id="@item.Id">Edit</a>
             <a asp-action="DeleteVideo" asp-route-id="@item.Id">Delete</a>
@@ -34,7 +33,7 @@
     </tr>
     }
      </tbody>
-     </table>
+</table>
 
 
 

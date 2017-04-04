@@ -15,18 +15,51 @@ namespace MyTheatre.Web.Controllers
         private readonly string _remoteServiceBaseUrl = "http://192.168.99.100:5000/api/videos";
         public async Task<IActionResult> Index()
         {
-            // _apiClient = new HttpClient();
-            // var dataString =  await _apiClient.GetStringAsync(_remoteServiceBaseUrl);
+            _apiClient = new HttpClient();
+            var dataString = await _apiClient.GetStringAsync(_remoteServiceBaseUrl);
 
-            //   var vms = JsonConvert.DeserializeObject<List<VideoViewModel>>(dataString);
+            var vms = JsonConvert.DeserializeObject<List<VideoViewModel>>(dataString);
 
-            // return View(vms);
-            return View(new List<VideoViewModel>());
+            return View(vms);
         }
 
-         [HttpGet]
-         public IActionResult CreateVideo(){
+        public IActionResult CreateVideo()
+        {
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditVideo(int? id)
+        {
+            if (id == null)
+                return NotFound();
+            
+            _apiClient = new HttpClient();
+            var dataString = await _apiClient.GetStringAsync(_remoteServiceBaseUrl+"/"+id); 
+            var vm = JsonConvert.DeserializeObject<VideoViewModel>(dataString);
+            if (vm == null)
+                return NotFound();
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditVideo(int id,[Bind("Id,Title,Plot")]VideoViewModel video)
+        {
+            if (ModelState.IsValid)
+            {
+                _apiClient = new HttpClient();
+
+                var updateUrl = $"{_remoteServiceBaseUrl}/update";
+
+                var contentString = new StringContent(JsonConvert.SerializeObject(video),System.Text.Encoding.UTF8,"application/json");
+                
+                var response = await _apiClient.PostAsync(updateUrl,contentString);
+                
+                return RedirectToAction("Index");
+            }
+
+            return View(video);
         }
 
         public IActionResult About()
