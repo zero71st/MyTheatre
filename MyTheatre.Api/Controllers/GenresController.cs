@@ -18,7 +18,7 @@ namespace MyTheatre.Api.Controllers
             _db = db;
         }
 
-        [Route("genres")]
+        [Route("all")]
         [HttpGet]
         public async Task<List<Genre>> GetGenres()
         {

@@ -1,5 +1,30 @@
 @model IEnumerable<MyTheatre.Web.ViewModels.GenreViewModel>
 
 <h1>Mange Genres</h1>
+<hr/>
+
+  <div class="col-md-offset-11">
+        <a class="btn btn-primary" asp-action="CreateGenre" asp-controller="Genre">Add</a>
+  </div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model=> model.Name)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+        <tr>
+           <td>
+               @Html.DisplayFor(modelItem => item.Name)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
 
 
