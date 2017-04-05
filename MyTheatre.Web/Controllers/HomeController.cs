@@ -12,7 +12,7 @@ namespace MyTheatre.Web.Controllers
     public class HomeController : Controller
     {
         private HttpClient _apiClient;
-        private readonly string _remoteServiceBaseUrl = "http://localhost:5000/api/videos";
+        private readonly string _remoteServiceBaseUrl = "http://192.168.99.100/api/videos";
         public async Task<IActionResult> Index()
         {
             _apiClient = new HttpClient();

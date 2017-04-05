@@ -6,7 +6,5 @@ namespace MyTheatre.Domain
     {
         public int Id { get; set; }
         public string Name { get; set;}
-
-        public virtual IEnumerable<Video> Videos { get; set; }
     }
 }

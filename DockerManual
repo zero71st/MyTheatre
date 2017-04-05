@@ -1,1 +1,1 @@
-docker run --name myapiserver -p 80:80 -v $(pwd):/App myapi bash -c "dotnet restore && dotnet build && dotnet publish -o ./out -c Release && cd MyTheatre.Api && dotnet ./out/MyTheatre.Api.dll"
+\
