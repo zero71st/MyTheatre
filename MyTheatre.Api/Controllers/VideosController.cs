@@ -43,7 +43,8 @@ namespace MyTheatre.Api.Controllers
                     new Video 
                     {
                         Title = video.Title,
-                        Plot = video.Plot
+                        Plot = video.Plot,
+                        GenreId = video.GenreId
                     });
                await _db.SaveChangesAsync();
                return Ok();

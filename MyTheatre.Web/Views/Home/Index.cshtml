@@ -15,6 +15,7 @@
         <th>@Html.DisplayNameFor(model => model.Title)</th>
         <th>@Html.DisplayNameFor(model => model.Plot)</th>
         <th>@Html.DisplayNameFor(model => model.ImagePath)</th>
+        <th>@Html.DisplayNameFor(model => model.GenreId)</th>
     </tr>
     </thead>
      <tbody>
@@ -26,6 +27,7 @@
         </td>
         <td>@Html.DisplayFor(modelItem => item.Plot)</td>
         <td>@Html.DisplayFor(modelItem => item.ImagePath)</td>
+        <td>@Html.DisplayFor(modelItem => item.GenreId)</td>
         <td>
             <a asp-action="EditVideo" asp-route-id="@item.Id">Edit</a>
             <a asp-action="DeleteVideo" asp-route-id="@item.Id">Delete</a>

@@ -26,5 +26,12 @@
                 <span asp-validation-for="Plot" class="text-danger"></span>
             </div>
         </div>   
+          <div class="form-group">
+            <label asp-for="GenreId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+               <select class="form-control" asp-for="GenreId" asp-items="@(new SelectList(@ViewBag.Genres,"Id","Name"))"></select>
+                <span asp-validation-for="GenreId" class="text-danger"></span>
+            </div>
+        </div>  
     </div>
 </form>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MyTheatre.Domain;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ namespace MyTheatre.Web.Controllers
     public class HomeController : Controller
     {
         private HttpClient _apiClient;
-        private readonly string _remoteServiceBaseUrl = "http://192.168.99.100/api/videos";
+        private readonly string _remoteServiceBaseUrl = "http://localhost:5000/api/videos";
         public async Task<IActionResult> Index()
         {
             _apiClient = new HttpClient();
@@ -25,9 +26,16 @@ namespace MyTheatre.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreateVideo()
+        public async Task<IActionResult> CreateVideo()
         {
-            return View();
+            var vm = new VideoViewModel();
+            var genres = await GetAllGenres();
+
+       //     vm.Genres = new SelectList(genres, "Id", "Name");
+        //   vm.Genres = genres;
+            ViewBag.Genres = genres.ToList();
+
+            return View(vm);
         }
 
         [HttpGet]
@@ -45,7 +53,20 @@ namespace MyTheatre.Web.Controllers
 
         }
 
-        public async Task<IActionResult> CreateVideo([Bind("Title,Plot")]VideoViewModel video)
+        public async Task<List<GenreViewModel>> GetAllGenres()
+        {
+            _apiClient = new HttpClient();
+
+            var getGenresUrl = "http://localhost:5000/api/genres/all";
+
+            var dataString = await _apiClient.GetStringAsync(getGenresUrl);
+
+            var genres = JsonConvert.DeserializeObject<List<GenreViewModel>>(dataString);
+             
+            return genres;
+        }
+
+        public async Task<IActionResult> CreateVideo([Bind("Title,Plot,GenreId")]VideoViewModel video)
         {
             _apiClient = new HttpClient();
             

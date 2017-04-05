@@ -10,14 +10,12 @@ namespace MyTheatre.Web.Controllers
 
     public class GenreController : Controller
     {
-        private HttpClient _apiClient;
-        private readonly string _remoteServiceBaseUrl  = "http://192.168.99.100/api/genres";
+        private HttpClient _apiClient = new HttpClient();
+        private readonly string _remoteServiceBaseUrl  = "http://localhost:5000/api/genres";
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            _apiClient = new HttpClient();
-
             var getGenresUrl = $"{_remoteServiceBaseUrl}/all";
 
             var dataString = await _apiClient.GetStringAsync(getGenresUrl);
@@ -29,6 +27,23 @@ namespace MyTheatre.Web.Controllers
 
             return View(genres);
 
+        }
+        
+        public IActionResult CreateGenre()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateGenre([Bind("Id,Name")]GenreViewModel genre)
+        {
+            var createGenrnUrl = $"{_remoteServiceBaseUrl}/create";
+
+            var contentString = new StringContent(JsonConvert.SerializeObject(genre),System.Text.Encoding.UTF8,"application/json");
+
+            var response = await _apiClient.PostAsync(createGenrnUrl,contentString);
+
+            return RedirectToAction("Index");
         }
     }
 }
