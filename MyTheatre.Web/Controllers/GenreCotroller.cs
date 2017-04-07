@@ -45,5 +45,29 @@ namespace MyTheatre.Web.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateGenre(int id)
+        {
+            var getUrl = $"{_remoteServiceBaseUrl}/{id}";
+
+            var dataString = await _apiClient.GetStringAsync(getUrl);
+
+            var genre = JsonConvert.DeserializeObject<GenreViewModel>(dataString);
+
+            return View(genre);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateGenre(int id,[Bind("Id,Name")]GenreViewModel genre)
+        {
+            var updateUrl = $"{_remoteServiceBaseUrl}/update";
+
+            var contentString = new StringContent(JsonConvert.SerializeObject(genre),System.Text.Encoding.UTF8,"application/Json");
+           
+            var response = await _apiClient.PostAsync(updateUrl,contentString);
+
+            return RedirectToAction("Index");
+        }
     }
 }

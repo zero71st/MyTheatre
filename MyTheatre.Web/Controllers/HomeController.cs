@@ -54,7 +54,7 @@ namespace MyTheatre.Web.Controllers
         {
             _apiClient = new HttpClient();
 
-            var getGenresUrl = "http://localhost:5000/api/genres/all";
+            var getGenresUrl = "http://192.168.99.100/api/genres/all";
 
             var dataString = await _apiClient.GetStringAsync(getGenresUrl);
 

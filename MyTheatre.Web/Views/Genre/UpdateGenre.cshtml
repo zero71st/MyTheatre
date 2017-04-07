@@ -1,0 +1,20 @@
+@model MyTheatre.Web.ViewModels.GenreViewModel
+
+<h1>Update @Model.Name</h1>
+
+<form asp-action="UpdateGenre">
+     <div class="col-md-offset-10">
+        <input type="submit" class="btn btn-primary" value="Save"/>
+        <a asp-action="Index" asp-controller="Genre" class="btn btn-default">Cancel</a>
+    </div>
+    <input type="hidden" asp-for="Id">    
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label asp-for="Name" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>  
+    </div>
+</form>

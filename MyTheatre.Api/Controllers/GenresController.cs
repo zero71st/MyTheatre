@@ -27,6 +27,16 @@ namespace MyTheatre.Api.Controllers
             return genres;
         }
 
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetGenreAsync(int id)
+        {
+            var genrn = await _db.Genres.FindAsync(id);
+            if (genrn == null)
+                return NotFound();
+                
+            return Ok(genrn);
+        }
+
         [Route("create")]
         [HttpPost]
         public async Task<IActionResult> CreateGenre([FromBody]Genre genre)
