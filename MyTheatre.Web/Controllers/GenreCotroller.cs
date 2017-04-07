@@ -11,7 +11,7 @@ namespace MyTheatre.Web.Controllers
     public class GenreController : Controller
     {
         private HttpClient _apiClient = new HttpClient();
-        private readonly string _remoteServiceBaseUrl  = "http://localhost:5000/api/genres";
+        private readonly string _remoteServiceBaseUrl  = "http://192.168.99.100/api/genres";
 
         [HttpGet]
         public async Task<IActionResult> Index()

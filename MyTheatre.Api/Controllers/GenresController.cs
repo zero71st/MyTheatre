@@ -62,7 +62,6 @@ namespace MyTheatre.Api.Controllers
             await _db.SaveChangesAsync();
 
             return Ok();
-
         }
     }
 }

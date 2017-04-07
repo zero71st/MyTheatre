@@ -13,7 +13,7 @@ namespace MyTheatre.Web.Controllers
     public class HomeController : Controller
     {
         private HttpClient _apiClient;
-        private readonly string _remoteServiceBaseUrl = "http://localhost:5000/api/videos";
+        private readonly string _remoteServiceBaseUrl = "http://192.168.99.100/api/videos";
         public async Task<IActionResult> Index()
         {
             _apiClient = new HttpClient();
@@ -31,8 +31,6 @@ namespace MyTheatre.Web.Controllers
             var vm = new VideoViewModel();
             var genres = await GetAllGenres();
 
-       //     vm.Genres = new SelectList(genres, "Id", "Name");
-        //   vm.Genres = genres;
             ViewBag.Genres = genres.ToList();
 
             return View(vm);
@@ -50,7 +48,6 @@ namespace MyTheatre.Web.Controllers
             var vm = JsonConvert.DeserializeObject<VideoViewModel>(dataString);
 
             return View(vm);
-
         }
 
         public async Task<List<GenreViewModel>> GetAllGenres()
