@@ -83,17 +83,17 @@ namespace MyTheatre.Web.Controllers
                 return NotFound();
             
             _apiClient = new HttpClient();
-
             var getVideoUrl = $"{_remoteServiceBaseUrl}/{id}";
-
             var dataString = await _apiClient.GetStringAsync(getVideoUrl); 
+            var video = JsonConvert.DeserializeObject<VideoViewModel>(dataString);
 
-            var vm = JsonConvert.DeserializeObject<VideoViewModel>(dataString);
-
-            if (vm == null)
+            if (video == null)
                 return NotFound();
 
-            return View(vm);
+            var genres = await GetAllGenres();
+            ViewBag.Genres = genres.ToList();
+
+            return View(video);
         }
 
         [HttpPost]

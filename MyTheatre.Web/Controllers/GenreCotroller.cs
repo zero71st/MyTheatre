@@ -50,9 +50,7 @@ namespace MyTheatre.Web.Controllers
         public async Task<IActionResult> UpdateGenre(int id)
         {
             var getUrl = $"{_remoteServiceBaseUrl}/{id}";
-
             var dataString = await _apiClient.GetStringAsync(getUrl);
-
             var genre = JsonConvert.DeserializeObject<GenreViewModel>(dataString);
 
             return View(genre);
