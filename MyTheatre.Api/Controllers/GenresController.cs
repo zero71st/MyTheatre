@@ -20,7 +20,7 @@ namespace MyTheatre.Api.Controllers
 
         [Route("all")]
         [HttpGet]
-        public async Task<List<Genre>> GetGenres()
+        public async Task<List<Genre>> GetGenresAsync()
         {
             List<Genre> genres = await _db.Genres.ToListAsync();
 
@@ -39,15 +39,13 @@ namespace MyTheatre.Api.Controllers
 
         [Route("create")]
         [HttpPost]
-        public async Task<IActionResult> CreateGenre([FromBody]Genre genre)
+        public async Task<IActionResult> CreateGenreAsync([FromBody]Genre genre)
         {
             if (genre == null)
                 return NotFound();
             
             Genre genreToAdd = new Genre { Name = genre.Name};
-
             _db.Genres.Add(genreToAdd);
-
             await _db.SaveChangesAsync();
 
             return Ok();
@@ -55,20 +53,17 @@ namespace MyTheatre.Api.Controllers
 
         [Route("update")]
         [HttpPost]
-        public async Task<IActionResult> UpdateGenre([FromBody]Genre genre)
+        public async Task<IActionResult> UpdateGenreAsync([FromBody]Genre genre)
         {
             if (genre == null)
                 return NotFound();
             
             Genre genreToUpdate = await _db.Genres.FindAsync(genre.Id);
-
             if (genreToUpdate == null)
                 return NotFound();
             
             genreToUpdate.Name = genre.Name;
-        
             _db.Genres.Update(genreToUpdate);
-
             await _db.SaveChangesAsync();
 
             return Ok();
