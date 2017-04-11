@@ -30,8 +30,7 @@ namespace MyTheatre.Web.Controllers
         public async Task<IActionResult> CreateVideoAsync()
         {
             var video = new VideoViewModel();
-            var genres = await GetGenresAsync();
-            ViewBag.Genres = genres.ToList();
+            ViewBag.Genres = await GetGenresAsync();
 
             return View(video);
         }
@@ -60,11 +59,19 @@ namespace MyTheatre.Web.Controllers
         [ActionName("CreateVideo")]
         public async Task<IActionResult> CreateVideoAsync([Bind("Title,Plot,GenreId")]VideoViewModel video)
         {
-            var createUrl = $"{_remoteServiceBaseUrl}/create";
-            var contentString = new StringContent(JsonConvert.SerializeObject(video),System.Text.Encoding.UTF8,"application/json");
-            var response =  await _apiClient.PostAsync(createUrl,contentString);
+         
+            if (ModelState.IsValid)
+            {
+                var createUrl = $"{_remoteServiceBaseUrl}/create";
+                var contentString = new StringContent(JsonConvert.SerializeObject(video), System.Text.Encoding.UTF8, "application/json");
+                var response = await _apiClient.PostAsync(createUrl, contentString);
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.Genres = await GetGenresAsync();
+
+            return View(video);
         }
 
         [HttpGet]
@@ -81,8 +88,7 @@ namespace MyTheatre.Web.Controllers
             if (video == null)
                 return NotFound();
 
-            var genres = await GetGenresAsync();
-            ViewBag.Genres = genres.ToList();
+            ViewBag.Genres = await GetGenresAsync();
 
             return View(video);
         }
@@ -99,6 +105,8 @@ namespace MyTheatre.Web.Controllers
                 
                 return RedirectToAction("Index");
             }
+
+            ViewBag.Genres = await GetGenresAsync();
 
             return View(video);
         }
