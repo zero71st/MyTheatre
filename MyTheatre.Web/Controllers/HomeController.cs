@@ -12,52 +12,40 @@ namespace MyTheatre.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private HttpClient _apiClient;
+        private HttpClient _apiClient = new HttpClient();
         private readonly string _remoteServiceBaseUrl = "http://192.168.99.100/api/videos";
         public async Task<IActionResult> Index()
         {
-            _apiClient = new HttpClient();
-
             var dataString = await _apiClient.GetStringAsync(_remoteServiceBaseUrl);
+            var video = JsonConvert.DeserializeObject<List<VideoViewModel>>(dataString);
 
-            var vms = JsonConvert.DeserializeObject<List<VideoViewModel>>(dataString);
-
-            return View(vms);
+            return View(video);
         }
 
         [HttpGet]
         public async Task<IActionResult> CreateVideo()
         {
-            var vm = new VideoViewModel();
+            var video = new VideoViewModel();
             var genres = await GetAllGenres();
-
             ViewBag.Genres = genres.ToList();
 
-            return View(vm);
+            return View(video);
         }
 
         [HttpGet]
         public async Task<IActionResult> ViewVideo(int id)
         {
-            _apiClient = new HttpClient();
-
             var getVideoUrl = $"{_remoteServiceBaseUrl}/{id}";
-
             var dataString = await _apiClient.GetStringAsync(getVideoUrl);
+            var video = JsonConvert.DeserializeObject<VideoViewModel>(dataString);
 
-            var vm = JsonConvert.DeserializeObject<VideoViewModel>(dataString);
-
-            return View(vm);
+            return View(video);
         }
 
         public async Task<List<GenreViewModel>> GetAllGenres()
         {
-            _apiClient = new HttpClient();
-
             var getGenresUrl = "http://192.168.99.100/api/genres/all";
-
             var dataString = await _apiClient.GetStringAsync(getGenresUrl);
-
             var genres = JsonConvert.DeserializeObject<List<GenreViewModel>>(dataString);
              
             return genres;
@@ -65,12 +53,8 @@ namespace MyTheatre.Web.Controllers
 
         public async Task<IActionResult> CreateVideo([Bind("Title,Plot,GenreId")]VideoViewModel video)
         {
-            _apiClient = new HttpClient();
-            
             var createUrl = $"{_remoteServiceBaseUrl}/create";
-            
             var contentString = new StringContent(JsonConvert.SerializeObject(video),System.Text.Encoding.UTF8,"application/json");
-
             var response =  await _apiClient.PostAsync(createUrl,contentString);
 
             return RedirectToAction("Index");
@@ -82,7 +66,6 @@ namespace MyTheatre.Web.Controllers
             if (id == null)
                 return NotFound();
             
-            _apiClient = new HttpClient();
             var getVideoUrl = $"{_remoteServiceBaseUrl}/{id}";
             var dataString = await _apiClient.GetStringAsync(getVideoUrl); 
             var video = JsonConvert.DeserializeObject<VideoViewModel>(dataString);
@@ -101,11 +84,7 @@ namespace MyTheatre.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _apiClient = new HttpClient();
                 var updateUrl = $"{_remoteServiceBaseUrl}/update";
-
-                int selectValue = video.GenreId;
-
                 var contentString = new StringContent(JsonConvert.SerializeObject(video),System.Text.Encoding.UTF8,"application/json");
                 var response = await _apiClient.PostAsync(updateUrl,contentString);
                 
@@ -121,27 +100,20 @@ namespace MyTheatre.Web.Controllers
             if (id == null)
                 return NotFound();
             
-            _apiClient = new HttpClient();
-
             var getVideoUrl = $"{_remoteServiceBaseUrl}/{id}";
-            
             var dataString = await _apiClient.GetStringAsync(getVideoUrl);
+            var video = JsonConvert.DeserializeObject<VideoViewModel>(dataString);
 
-            var vm = JsonConvert.DeserializeObject<VideoViewModel>(dataString);
-
-            if (vm == null)
+            if (video == null)
                 return NotFound();
             
-            return View(vm);
+            return View(video);
         }
 
         [HttpPost]
         public async Task<IActionResult> DeleteVideo(int id)
         {
-            _apiClient = new HttpClient();
-
             var deleteUrl = $"{_remoteServiceBaseUrl}/{id}";
-
             var response = await _apiClient.DeleteAsync(deleteUrl);
 
             return RedirectToAction("Index");
