@@ -25,7 +25,7 @@ namespace MyTheatre.Api.Controllers
 
         // GET api/Video/5
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetVideo(int id)
+        public async Task<IActionResult> GetVideoAsync(int id)
         {
             var video = await _db.Videos.FindAsync(id);
             if (video == null)
@@ -37,7 +37,7 @@ namespace MyTheatre.Api.Controllers
         // POST api/Video]
         [Route("create")]
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]Video video)
+        public async Task<IActionResult> CreateVideoAsync([FromBody]Video video)
         {
                 _db.Videos.Add(
                     new Video 
@@ -53,7 +53,7 @@ namespace MyTheatre.Api.Controllers
         // PUT api/video/5
         [Route("update")]
         [HttpPost]
-        public async Task<IActionResult> UpdateVideo([FromBody]Video video)
+        public async Task<IActionResult> UpdateVideoAsync([FromBody]Video video)
         {
             var videoToUpdate =  await _db.Videos.FindAsync(video.Id);
             if (videoToUpdate == null)
@@ -72,7 +72,7 @@ namespace MyTheatre.Api.Controllers
 
         // DELETE api/video/5
         [HttpDelete("{id:int}")]
-        public async Task<IActionResult> DeleteVideo(int id)
+        public async Task<IActionResult> DeleteVideoAsync(int id)
         {
             var videoToDelete = await _db.Videos.FindAsync(id);
 
