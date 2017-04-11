@@ -8,7 +8,7 @@ namespace MyTheatre.Web.ViewModels
         public string Title { get; set; }
         public string Plot { get; set; }
         public string ImagePath {get;set;}
-        public string GenreId {get;set;}
+        public int GenreId {get;set;}
 
         public IEnumerable<GenreViewModel> Genres {get;set;}
 

@@ -97,16 +97,16 @@ namespace MyTheatre.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditVideo(int id,[Bind("Id,Title,Plot")]VideoViewModel video)
+        public async Task<IActionResult> EditVideo(int id,[Bind("Id,Title,Plot,GenreId")]VideoViewModel video)
         {
             if (ModelState.IsValid)
             {
                 _apiClient = new HttpClient();
-
                 var updateUrl = $"{_remoteServiceBaseUrl}/update";
 
+                int selectValue = video.GenreId;
+
                 var contentString = new StringContent(JsonConvert.SerializeObject(video),System.Text.Encoding.UTF8,"application/json");
-                
                 var response = await _apiClient.PostAsync(updateUrl,contentString);
                 
                 return RedirectToAction("Index");
