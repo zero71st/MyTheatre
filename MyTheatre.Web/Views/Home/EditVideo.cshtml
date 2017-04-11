@@ -4,11 +4,12 @@
 }
 
 <h2>Edit Video</h2>
-
+<hr/>
 <form asp-action="EditVideo">
+<h3>@Model.Title</h3>
 <div class="col-md-offset-10">
     <input type="submit" class="btn btn-primary" value="Save"  />
-      <a asp-action="Index" class="btn btn-default">Cancel</a>
+    <a asp-action="Index" class="btn btn-default">Cancel</a>
 </div>
 <div class="form-horizontal">
     <div asp-validation-summary="All" class="text-danger"></div>
