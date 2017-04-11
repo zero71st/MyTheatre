@@ -8,9 +8,10 @@ using MyTheatre.Api.Infrastructure;
 namespace MyTheatre.Api.Migrations
 {
     [DbContext(typeof(MyTheatreContext))]
-    partial class MyTheatreContextModelSnapshot : ModelSnapshot
+    [Migration("25600411023415_changed_genreid_from_string_to_int")]
+    partial class changed_genreid_from_string_to_int
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1");

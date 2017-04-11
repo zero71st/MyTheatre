@@ -61,6 +61,7 @@ namespace MyTheatre.Api.Controllers
 
             videoToUpdate.Title = video.Title;
             videoToUpdate.Plot = video.Plot;
+            videoToUpdate.GenreId = video.GenreId;
 
             _db.Videos.Update(videoToUpdate);
 

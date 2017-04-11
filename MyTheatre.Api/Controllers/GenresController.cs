@@ -30,11 +30,11 @@ namespace MyTheatre.Api.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetGenreAsync(int id)
         {
-            var genrn = await _db.Genres.FindAsync(id);
-            if (genrn == null)
+            var genre = await _db.Genres.FindAsync(id);
+            if (genre == null)
                 return NotFound();
                 
-            return Ok(genrn);
+            return Ok(genre);
         }
 
         [Route("create")]
@@ -66,7 +66,7 @@ namespace MyTheatre.Api.Controllers
                 return NotFound();
             
             genreToUpdate.Name = genre.Name;
-
+        
             _db.Genres.Update(genreToUpdate);
 
             await _db.SaveChangesAsync();
