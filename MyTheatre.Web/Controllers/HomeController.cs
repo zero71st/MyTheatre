@@ -14,7 +14,10 @@ namespace MyTheatre.Web.Controllers
     {
         private HttpClient _apiClient = new HttpClient();
         private readonly string _remoteServiceBaseUrl = "http://192.168.99.100/api/videos";
-        public async Task<IActionResult> Index()
+
+
+        [ActionName("Index")]
+        public async Task<IActionResult> ListVideosAsync()
         {
             var dataString = await _apiClient.GetStringAsync(_remoteServiceBaseUrl);
             var video = JsonConvert.DeserializeObject<List<VideoViewModel>>(dataString);
@@ -23,17 +26,19 @@ namespace MyTheatre.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreateVideo()
+        [ActionName("CreateVideo")]
+        public async Task<IActionResult> CreateVideoAsync()
         {
             var video = new VideoViewModel();
-            var genres = await GetAllGenres();
+            var genres = await GetGenresAsync();
             ViewBag.Genres = genres.ToList();
 
             return View(video);
         }
 
+        [ActionName("ViewVideo")]
         [HttpGet]
-        public async Task<IActionResult> ViewVideo(int id)
+        public async Task<IActionResult> ViewVideoAsync(int id)
         {
             var getVideoUrl = $"{_remoteServiceBaseUrl}/{id}";
             var dataString = await _apiClient.GetStringAsync(getVideoUrl);
@@ -42,7 +47,7 @@ namespace MyTheatre.Web.Controllers
             return View(video);
         }
 
-        public async Task<List<GenreViewModel>> GetAllGenres()
+        public async Task<List<GenreViewModel>> GetGenresAsync()
         {
             var getGenresUrl = "http://192.168.99.100/api/genres/all";
             var dataString = await _apiClient.GetStringAsync(getGenresUrl);
@@ -50,8 +55,10 @@ namespace MyTheatre.Web.Controllers
              
             return genres;
         }
-
-        public async Task<IActionResult> CreateVideo([Bind("Title,Plot,GenreId")]VideoViewModel video)
+        
+        [HttpPost]
+        [ActionName("CreateVideo")]
+        public async Task<IActionResult> CreateVideoAsync([Bind("Title,Plot,GenreId")]VideoViewModel video)
         {
             var createUrl = $"{_remoteServiceBaseUrl}/create";
             var contentString = new StringContent(JsonConvert.SerializeObject(video),System.Text.Encoding.UTF8,"application/json");
@@ -61,7 +68,8 @@ namespace MyTheatre.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditVideo(int? id)
+        [ActionName("EditVideo")]
+        public async Task<IActionResult> EditVideoAsync(int? id)
         {
             if (id == null)
                 return NotFound();
@@ -73,14 +81,15 @@ namespace MyTheatre.Web.Controllers
             if (video == null)
                 return NotFound();
 
-            var genres = await GetAllGenres();
+            var genres = await GetGenresAsync();
             ViewBag.Genres = genres.ToList();
 
             return View(video);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditVideo(int id,[Bind("Id,Title,Plot,GenreId")]VideoViewModel video)
+        [ActionName("EditVideo")]
+        public async Task<IActionResult> EditVideoAsync(int id,[Bind("Id,Title,Plot,GenreId")]VideoViewModel video)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +104,8 @@ namespace MyTheatre.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteVideo(int? id)
+        [ActionName("DeleteVideo")]
+        public async Task<IActionResult> DeleteVideoAsync(int? id)
         {
             if (id == null)
                 return NotFound();
@@ -111,7 +121,8 @@ namespace MyTheatre.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteVideo(int id)
+        [ActionName("DeleteVideo")]
+        public async Task<IActionResult> DeleteVideoAsync(int id)
         {
             var deleteUrl = $"{_remoteServiceBaseUrl}/{id}";
             var response = await _apiClient.DeleteAsync(deleteUrl);
