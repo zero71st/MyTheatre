@@ -1,6 +1,8 @@
 FROM microsoft/aspnetcore-build
 WORKDIR /app
 
-COPY ./out .
-ENTRYPOINT dotnet MyTheatre.Api.dll
+COPY . .
+RUN dotnet restore
+RUN dotnet publish -o ./out -c Releash
+ENTRYPOINT dotnet ./out/MyTheatre.Api.dll
 
